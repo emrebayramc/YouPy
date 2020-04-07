@@ -14,7 +14,8 @@ By passing cookie and user agent to the request header; i was able to download a
 youtube_item = YouTubeItem(video_url, request_headers = {<optional request headers>})
 v_1080p = youtube_item.streams.filter(res='1080p').first()
 if v_1080p is not None:
-  v_1080p.download('<download_path>', filename=<file_name>)```
+  v_1080p.download('<download_path>', filename=<file_name>)
 
+```
 Details:
 https://medium.com/@emrebayram_71713/how-to-avoid-http-error-429-too-many-requests-in-python-while-using-pytube-library-39c5eced838e
