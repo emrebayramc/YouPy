@@ -11,7 +11,7 @@ By passing cookie and user agent to the request header; i was able to download a
 
 ```from YouPy import YouTubeItem
 
-youtube_item = YouTubeItem(video_url, request_headers = {<optional request headers>})
+youtube_item = YouTubeItem(video_url, request_headers = {'cookie': <your cookie>})
 v_1080p = youtube_item.streams.filter(res='1080p').first()
 if v_1080p is not None:
   v_1080p.download('<download_path>', filename=<file_name>)
