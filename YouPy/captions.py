@@ -12,7 +12,7 @@ from YouPy.helpers import safe_filename, target_directory
 class Caption:
     """Container for caption tracks."""
 
-    def __init__(self, caption_track: Dict):
+    def __init__(self, caption_track: Dict, request_headers: Dict):
         """Construct a :class:`Caption <Caption>`.
 
         :param dict caption_track:
@@ -21,11 +21,12 @@ class Caption:
         self.url = caption_track.get("baseUrl")
         self.name = caption_track["name"]["simpleText"]
         self.code = caption_track["languageCode"]
+        self.request_headers = request_headers
 
     @property
     def xml_captions(self) -> str:
         """Download the xml caption tracks."""
-        return request.get(self.url)
+        return request.get(self.url, request_headers=self.request_headers)
 
     def generate_srt_captions(self) -> str:
         """Generate "SubRip Subtitle" captions.

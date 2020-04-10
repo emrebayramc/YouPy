@@ -9,17 +9,20 @@ from YouPy import Caption, CaptionQuery, captions
 
 def test_float_to_srt_time_format():
     caption1 = Caption(
-        {"url": "url1", "name": {"simpleText": "name1"}, "languageCode": "en"}
+        {"url": "url1", "name": {"simpleText": "name1"}, "languageCode": "en"},
+        None
     )
     assert caption1.float_to_srt_time_format(3.89) == "00:00:03,890"
 
 
 def test_caption_query_sequence():
     caption1 = Caption(
-        {"url": "url1", "name": {"simpleText": "name1"}, "languageCode": "en"}
+        {"url": "url1", "name": {"simpleText": "name1"}, "languageCode": "en"},
+        None
     )
     caption2 = Caption(
-        {"url": "url2", "name": {"simpleText": "name2"}, "languageCode": "fr"}
+        {"url": "url2", "name": {"simpleText": "name2"}, "languageCode": "fr"},
+        None
     )
     caption_query = CaptionQuery(captions=[caption1, caption2])
     assert len(caption_query) == 2
@@ -32,10 +35,12 @@ def test_caption_query_sequence():
 
 def test_caption_query_get_by_language_code_when_exists():
     caption1 = Caption(
-        {"url": "url1", "name": {"simpleText": "name1"}, "languageCode": "en"}
+        {"url": "url1", "name": {"simpleText": "name1"}, "languageCode": "en"},
+        None
     )
     caption2 = Caption(
-        {"url": "url2", "name": {"simpleText": "name2"}, "languageCode": "fr"}
+        {"url": "url2", "name": {"simpleText": "name2"}, "languageCode": "fr"},
+        None
     )
     caption_query = CaptionQuery(captions=[caption1, caption2])
     assert caption_query["en"] == caption1
@@ -43,10 +48,12 @@ def test_caption_query_get_by_language_code_when_exists():
 
 def test_caption_query_get_by_language_code_when_not_exists():
     caption1 = Caption(
-        {"url": "url1", "name": {"simpleText": "name1"}, "languageCode": "en"}
+        {"url": "url1", "name": {"simpleText": "name1"}, "languageCode": "en"},
+        None
     )
     caption2 = Caption(
-        {"url": "url2", "name": {"simpleText": "name2"}, "languageCode": "fr"}
+        {"url": "url2", "name": {"simpleText": "name2"}, "languageCode": "fr"},
+        None
     )
     caption_query = CaptionQuery(captions=[caption1, caption2])
     with pytest.raises(KeyError):
@@ -60,7 +67,8 @@ def test_download(srt):
     with patch("builtins.open", open_mock):
         srt.return_value = ""
         caption = Caption(
-            {"url": "url1", "name": {"simpleText": "name1"}, "languageCode": "en"}
+            {"url": "url1", "name": {"simpleText": "name1"}, "languageCode": "en"},
+            None
         )
         caption.download("title")
         assert open_mock.call_args_list[0][0][0].split("/")[-1] == "title (en).srt"
@@ -72,7 +80,8 @@ def test_download_with_prefix(srt):
     with patch("builtins.open", open_mock):
         srt.return_value = ""
         caption = Caption(
-            {"url": "url1", "name": {"simpleText": "name1"}, "languageCode": "en"}
+            {"url": "url1", "name": {"simpleText": "name1"}, "languageCode": "en"},
+            None
         )
         caption.download("title", filename_prefix="1 ")
         assert open_mock.call_args_list[0][0][0].split("/")[-1] == "1 title (en).srt"
@@ -85,7 +94,8 @@ def test_download_with_output_path(srt):
     with patch("builtins.open", open_mock):
         srt.return_value = ""
         caption = Caption(
-            {"url": "url1", "name": {"simpleText": "name1"}, "languageCode": "en"}
+            {"url": "url1", "name": {"simpleText": "name1"}, "languageCode": "en"},
+            None
         )
         file_path = caption.download("title", output_path="blah")
         assert file_path == "/target/title (en).srt"
@@ -98,7 +108,8 @@ def test_download_xml_and_trim_extension(xml):
     with patch("builtins.open", open_mock):
         xml.return_value = ""
         caption = Caption(
-            {"url": "url1", "name": {"simpleText": "name1"}, "languageCode": "en"}
+            {"url": "url1", "name": {"simpleText": "name1"}, "languageCode": "en"},
+            None
         )
         caption.download("title.xml", srt=False)
         assert open_mock.call_args_list[0][0][0].split("/")[-1] == "title (en).xml"
@@ -106,7 +117,8 @@ def test_download_xml_and_trim_extension(xml):
 
 def test_repr():
     caption = Caption(
-        {"url": "url1", "name": {"simpleText": "name1"}, "languageCode": "en"}
+        {"url": "url1", "name": {"simpleText": "name1"}, "languageCode": "en"},
+        None
     )
     assert str(caption) == '<Caption lang="name1" code="en">'
 
@@ -118,7 +130,8 @@ def test_repr():
 def test_xml_captions(request_get):
     request_get.return_value = "test"
     caption = Caption(
-        {"url": "url1", "name": {"simpleText": "name1"}, "languageCode": "en"}
+        {"url": "url1", "name": {"simpleText": "name1"}, "languageCode": "en"},
+        None
     )
     assert caption.xml_captions == "test"
 
@@ -131,7 +144,8 @@ def test_generate_srt_captions(request):
         "如要啓動字幕，請按一下這裡的圖示。</text></transcript>"
     )
     caption = Caption(
-        {"url": "url1", "name": {"simpleText": "name1"}, "languageCode": "en"}
+        {"url": "url1", "name": {"simpleText": "name1"}, "languageCode": "en"},
+        None
     )
     assert caption.generate_srt_captions() == (
         "1\n"

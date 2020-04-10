@@ -210,7 +210,7 @@ class YouTubeItem:
             .get("playerCaptionsTracklistRenderer", {})
             .get("captionTracks", [])
         )
-        return [Caption(track) for track in raw_tracks]
+        return [Caption(track, self.request_headers) for track in raw_tracks]
 
     @property
     def captions(self) -> CaptionQuery:

@@ -67,7 +67,8 @@ def test_display_stream(youtube_item, stream):
 def test_download_caption_with_none(youtube_item, print_available):
     # Given
     caption = Caption(
-        {"url": "url1", "name": {"simpleText": "name1"}, "languageCode": "en"}
+        {"url": "url1", "name": {"simpleText": "name1"}, "languageCode": "en"},
+        None
     )
     youtube_item.captions = CaptionQuery([caption])
     # When
@@ -80,7 +81,8 @@ def test_download_caption_with_none(youtube_item, print_available):
 def test_download_caption_with_language_found(youtube_item):
     youtube_item.title = "video title"
     caption = Caption(
-        {"url": "url1", "name": {"simpleText": "name1"}, "languageCode": "en"}
+        {"url": "url1", "name": {"simpleText": "name1"}, "languageCode": "en"},
+        None
     )
     caption.download = MagicMock(return_value="file_path")
     youtube_item.captions = CaptionQuery([caption])
@@ -93,7 +95,8 @@ def test_download_caption_with_language_found(youtube_item):
 def test_download_caption_with_lang_not_found(youtube_item, print_available):
     # Given
     caption = Caption(
-        {"url": "url1", "name": {"simpleText": "name1"}, "languageCode": "en"}
+        {"url": "url1", "name": {"simpleText": "name1"}, "languageCode": "en"},
+        None
     )
     youtube_item.captions = CaptionQuery([caption])
     # When
@@ -105,10 +108,12 @@ def test_download_caption_with_lang_not_found(youtube_item, print_available):
 def test_print_available_captions(capsys):
     # Given
     caption1 = Caption(
-        {"url": "url1", "name": {"simpleText": "name1"}, "languageCode": "en"}
+        {"url": "url1", "name": {"simpleText": "name1"}, "languageCode": "en"},
+        None
     )
     caption2 = Caption(
-        {"url": "url2", "name": {"simpleText": "name2"}, "languageCode": "fr"}
+        {"url": "url2", "name": {"simpleText": "name2"}, "languageCode": "fr"},
+        None
     )
     query = CaptionQuery([caption1, caption2])
     # When
